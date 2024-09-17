@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PersonalLog;
+use App\Http\Controllers\BaseController;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     /**
      * Direct to home view
@@ -15,6 +16,7 @@ class HomeController extends Controller
     public function Home() {
         return view('home', [
             'logs' => PersonalLog::orderBy('date', 'desc')->get(),
+            'isLoggedIn' => self::isLoggedIn(),
         ]);
     }
 
