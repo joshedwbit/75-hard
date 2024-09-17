@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->date('date');
-            $table->integer('workouts');
-            $table->longText('workout_notes');
-            $table->integer('ml_of_water');
-            $table->longText('cheat_meals');
-            $table->integer('pages_read');
-            $table->longText('general_notes');
+            $table->integer('workouts')->default(0);
+            $table->longText('workout_notes')->nullable();
+            $table->integer('ml_of_water')->default(0);
+            $table->longText('cheat_meals')->nullable();
+            $table->integer('pages_read')->default(0);
+            $table->longText('general_notes')->nullable();
         });
     }
 

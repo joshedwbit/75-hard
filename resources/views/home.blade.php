@@ -74,7 +74,7 @@
         <div class="field field--pages-read">
             <label for="pages_read">Pages read</label>
 
-            <input type="number" step="1" min="1" max="300" name="pages_read" id="pages_read"/>
+            <input type="number" step="1" min="0" max="1000" name="pages_read" id="pages_read" value="0"/>
 
             @error('pages_read')
             <p class="err">{{$message}}</p>
