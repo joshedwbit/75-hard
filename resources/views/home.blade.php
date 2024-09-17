@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('base')
+
+@section('content')
+<section>
     <h1>75Hard tracker</h1>
+    <a href="/login">Login</a>
+    <a href="/register">Sign up</a>
     <h3>Add/edit todays entry:</h3>
 
     {{-- if todays entry exists, display it and add option to edit  --}}
@@ -100,5 +97,5 @@
     </form>
 
     <h3>Past entries:</h3>
-</body>
-</html>
+</section>
+@endsection
