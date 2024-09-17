@@ -37,7 +37,7 @@
         <div class="field field--workout-notes">
             <label for="workout_notes">Workout notes</label>
 
-            <textarea type="textarea" name="workout_notes" id="workout_notes" rows="3" cols="50"></textarea>
+            <textarea name="workout_notes" id="workout_notes" rows="3" cols="50"></textarea>
 
             @error('workout_notes')
             <p class="error">{{$message}}</p>
@@ -64,7 +64,7 @@
         <div class="field field--cheat-meals">
             <label for="cheat_meals">Cheat meals (comma separated)</label>
 
-            <textarea type="textarea" name="cheat_meals" id="cheat_meals" rows="3" cols="50"></textarea>
+            <textarea name="cheat_meals" id="cheat_meals" rows="3" cols="50"></textarea>
 
             @error('cheat_meals')
             <p class="error">{{$message}}</p>
@@ -81,12 +81,22 @@
             @enderror
         </div>
 
+        <div class="field field--general-notes">
+            <label for="general_notes">General notes</label>
+
+            <textarea name="general_notes" id="general_notes" rows="3" cols="50"></textarea>
+
+            @error('general_notes')
+            <p class="error">{{$message}}</p>
+            @enderror
+
+        </div>
+
         <div class="submit">
             <button type="submit">
                 Save entry
             </button>
         </div>
-
     </form>
 
     <h3>Past entries:</h3>
