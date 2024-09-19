@@ -7,10 +7,7 @@
     @auth
     <p class="">Logged in as {{ auth()->user()->name }}</p>
     @include('partials._logout')
-    @else
-    <a href="/login">Login</a>
-    <a href="/register">Sign up</a>
-    @endauth
+
     <h3>Add/edit todays entry:</h3>
 
     {{-- if todays entry exists, display it and add option to edit  --}}
@@ -103,5 +100,10 @@
     </form>
 
     <h3>Past entries:</h3>
+    @else
+    <p class="">Please select one of the following</p>
+    <a href="/login">Login</a>
+    <a href="/register">Sign up</a>
+    @endauth
 </section>
 @endsection
