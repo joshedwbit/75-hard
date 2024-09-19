@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LogController;
 
 Route::get('/home', [HomeController::class, 'Home']);
 
@@ -13,4 +14,4 @@ Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/login', [UserController::class, 'userLogin']);
 Route::post('/new-user', [UserController::class, 'registerNewUser']);
 
-Route::post('/entry-submitted', [HomeController::class, 'entrySubmitted']);
+Route::post('/entry-submitted', [LogController::class, 'entrySubmitted']);
