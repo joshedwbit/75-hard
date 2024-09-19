@@ -45,6 +45,10 @@ class LogController extends Controller
         $submittedFields['workouts'] = isset($submittedFields['workouts']) ? sizeof($submittedFields['workouts']) : 0;
         $submittedFields['water_count'] = isset($submittedFields['water_count']) ? sizeof($submittedFields['water_count']) : 0;
 
+        $submittedFields['workout_notes'] = strip_tags($submittedFields['workout_notes']);
+        $submittedFields['cheat_meals'] = strip_tags($submittedFields['cheat_meals']);
+        $submittedFields['general_notes'] = strip_tags($submittedFields['general_notes']);
+
         return $submittedFields;
     }
 }
