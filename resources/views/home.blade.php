@@ -14,7 +14,7 @@
     <h3>Add/edit todays entry:</h3>
 
     {{-- if todays entry exists, display it and add option to edit  --}}
-    <form method="post" action="entry-submitted">
+    <form method="post" action="create-entry">
         @csrf
 
         <div class="field field--date">

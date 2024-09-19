@@ -14,4 +14,4 @@ Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/login', [UserController::class, 'userLogin']);
 Route::post('/new-user', [UserController::class, 'registerNewUser']);
 
-Route::post('/entry-submitted', [LogController::class, 'entrySubmitted']);
+Route::post('/create-entry', [LogController::class, 'createEntry']);

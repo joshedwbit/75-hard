@@ -9,22 +9,43 @@ use Illuminate\Validation\Rule;
 
 class UserController extends BaseController
 {
+    /**
+     * Direct to login view
+     *
+     * @return void
+     */
     public function login()
     {
         return view('login');
     }
 
+    /**
+     * Direct to register view
+     *
+     * @return void
+     */
     public function register()
     {
         return view('register');
     }
 
+    /**
+     * Log user out
+     *
+     * @return void
+     */
     public function logout()
     {
         auth('web')->logout();
         return redirect('/login');
     }
 
+    /**
+     * Validate a login request
+     *
+     * @param Request $request
+     * @return void
+     */
     public function userLogin(Request $request)
     {
         $formFields = $request->validate([
@@ -47,6 +68,12 @@ class UserController extends BaseController
         }
     }
 
+    /**
+     * Validate registering a new user
+     *
+     * @param Request $request
+     * @return void
+     */
     public function registerNewUser(Request $request)
     {
         $formFields = $request->validate([

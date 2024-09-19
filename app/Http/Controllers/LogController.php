@@ -13,7 +13,7 @@ class LogController extends Controller
      * @param Request $request
      * @return void
      */
-    public function entrySubmitted(Request $request)
+    public function createEntry(Request $request)
     {
         $submittedFields = $this->validateLogFields($request);
 
@@ -26,7 +26,7 @@ class LogController extends Controller
      * Validate entry submissions
      *
      * @param Request $request
-     * @return void
+     * @return array
      */
     public function validateLogFields(Request $request)
     {
