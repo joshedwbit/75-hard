@@ -15,7 +15,7 @@ class LogController extends Controller
      */
     public function createEntry(Request $request)
     {
-        $submittedFields = $this->validateLogFields($request);
+        $submittedFields = $this->cleanLogFields($request);
 
         PersonalLog::create($submittedFields);
 
@@ -28,7 +28,7 @@ class LogController extends Controller
      * @param Request $request
      * @return array
      */
-    public function validateLogFields(Request $request)
+    public function cleanLogFields(Request $request)
     {
         $submittedFields = $request->validate([
             'date' => 'required',
@@ -48,6 +48,8 @@ class LogController extends Controller
         $submittedFields['workout_notes'] = strip_tags($submittedFields['workout_notes']);
         $submittedFields['cheat_meals'] = strip_tags($submittedFields['cheat_meals']);
         $submittedFields['general_notes'] = strip_tags($submittedFields['general_notes']);
+
+        $submittedFields['user_id'] = auth('web')->id();
 
         return $submittedFields;
     }
