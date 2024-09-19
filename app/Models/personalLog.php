@@ -17,5 +17,6 @@ class PersonalLog extends Model
         'cheat_meals',
         'pages_read',
         'general_notes',
+        'user_id',
     ];
 }
