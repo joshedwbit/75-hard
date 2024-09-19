@@ -4,13 +4,13 @@
 <section>
     <h1>75Hard tracker</h1>
 
-    @if ($isLoggedIn)
+    @auth
     <p class="">Logged in as {{ auth()->user()->name }}</p>
     @include('partials._logout')
     @else
     <a href="/login">Login</a>
     <a href="/register">Sign up</a>
-    @endif
+    @endauth
     <h3>Add/edit todays entry:</h3>
 
     {{-- if todays entry exists, display it and add option to edit  --}}

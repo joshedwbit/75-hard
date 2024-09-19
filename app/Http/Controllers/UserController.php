@@ -11,16 +11,12 @@ class UserController extends BaseController
 {
     public function login()
     {
-        return view('login', [
-            'isLoggedIn' => self::isLoggedIn(),
-        ]);
+        return view('login');
     }
 
     public function register()
     {
-        return view('register', [
-            'isLoggedIn' => self::isLoggedIn(),
-        ]);
+        return view('register');
     }
 
     public function logout()

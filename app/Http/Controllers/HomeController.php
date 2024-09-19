@@ -16,7 +16,6 @@ class HomeController extends BaseController
     public function Home() {
         return view('home', [
             'logs' => PersonalLog::orderBy('date', 'desc')->get(),
-            'isLoggedIn' => self::isLoggedIn(),
         ]);
     }
 

@@ -2,7 +2,7 @@
 
 @section('content')
 <section>
-    @if ($isLoggedIn)
+    @auth
     <p>You are already logged in!</p>
     @include('partials._logout')
     @else
@@ -42,6 +42,6 @@
         </button>
     </form>
     <aside>Already have an account? <a href="/login" class="">Click here to log in</a></aside>
-    @endif
+    @endauth
 </section>
 @endsection
