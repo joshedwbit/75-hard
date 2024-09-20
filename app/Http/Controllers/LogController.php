@@ -28,10 +28,11 @@ class LogController extends Controller
      * @param Request $request
      * @return array
      */
-    public function cleanLogFields(Request $request)
+    public function cleanLogFields(Request $request, $new=true, $requireDate=true)
     {
+        // todo clean args
         $submittedFields = $request->validate([
-            'date' => 'required',
+            'date' => $requireDate ? 'required' : 'nullable',
             'workouts' => 'nullable|array',
             'workouts*' => 'integer|in:1,2',
             'workout_notes' => 'nullable|string|max:100',
@@ -49,8 +50,52 @@ class LogController extends Controller
         $submittedFields['cheat_meals'] = strip_tags($submittedFields['cheat_meals']);
         $submittedFields['general_notes'] = strip_tags($submittedFields['general_notes']);
 
-        $submittedFields['user_id'] = auth('web')->id();
+        if ($new) {
+            $submittedFields['user_id'] = auth('web')->id();
+        }
 
         return $submittedFields;
+    }
+
+    public function editEntry(PersonalLog $log)
+    {
+        if (!$this->userMatchesLog($log)) {
+            return redirect('/home');
+        }
+
+        return view('edit-entry', [
+            'log' => $log,
+        ]);
+    }
+
+    public function updateEntry(PersonalLog $log, Request $request)
+    {
+        if ($this->userMatchesLog($log)) {
+            $submittedFields = $this->cleanLogFields($request, false, false);
+
+            $log->update($submittedFields);
+        }
+
+        return redirect('/home');
+    }
+
+    /**
+     * Check if the user ID matches the log ID
+     *
+     * @param PersonalLog $log
+     * @return bool
+     */
+    public function userMatchesLog(PersonalLog $log)
+    {
+        return auth('web')->user()->id === $log['user_id'];
+    }
+
+    public function deleteEntry(PersonalLog $log)
+    {
+        if ($this->userMatchesLog($log)) {
+            $log->delete();
+        }
+
+        return redirect('/home');
     }
 }

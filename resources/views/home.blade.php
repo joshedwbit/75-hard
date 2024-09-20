@@ -123,11 +123,11 @@
     <div style="grid-area: pages;">{{$log['pages_read']}}</div>
 
     <div style="grid-area: edit; align-self: center;">
-        <a href="/edit-log/{{$log['id']}}" class="">Edit</a>
+        <a href="/edit-entry/{{$log['id']}}" class="">Edit</a>
     </div>
 
     <div style="grid-area: delete; align-self: center;">
-        <form action="/delete-log/{{$log['id']}}" method="POST" class="">
+        <form action="/delete-entry/{{$log['id']}}" method="POST" class="">
             @csrf
             @method('DELETE')
             <button class="">Remove</button>
