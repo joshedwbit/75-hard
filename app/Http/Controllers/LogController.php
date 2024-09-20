@@ -15,6 +15,16 @@ class LogController extends Controller
      */
     public function createEntry(Request $request)
     {
+        $existingRecord = PersonalLog::where('date', $request['date'])
+                                    ->where('user_id', auth('web')->id())
+                                    ->exists();
+
+        if ($existingRecord) {
+            return back()->withErrors([
+                'date' => 'An entry for that date already exists!'
+            ]);
+        }
+
         $submittedFields = $this->cleanLogFields($request);
 
         PersonalLog::create($submittedFields);
