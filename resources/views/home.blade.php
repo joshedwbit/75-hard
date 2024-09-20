@@ -100,6 +100,28 @@
     </form>
 
     <h3>Past entries:</h3>
+
+    @foreach($logs as $log)
+    <div style="
+    width:400px;
+    display:grid;
+    grid-template-areas:
+    'date workouts_header water_header pages_header'
+    'date workouts water_count pages';
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    justify-content: start;">
+    <div style="grid-area: workouts_header;">Workouts</div>
+    <div style="grid-area: water_header;">Water count</div>
+    <div style="grid-area: pages_header;">Pages read</div>
+
+    <div style="grid-area: date; align-self: center;"><a href="/log/{{$log['id']}}">{{ $log['date'] }}</a></div>
+    <div style="grid-area: workouts;">{{$log['workouts']}}</div>
+    <div style="grid-area: water_count;">{{$log['water_count']}}</div>
+    <div style="grid-area: pages;">{{$log['pages_read']}}</div>
+    </div>
+    @endforeach
     @else
     <p class="">Please select one of the following</p>
     <a href="/login">Login</a>
