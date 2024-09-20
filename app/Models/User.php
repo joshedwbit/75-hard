@@ -44,4 +44,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Explain relationship between users and logs
+     *
+     * @return void
+     */
+    public function userLogs()
+    {
+        return $this->hasMany(PersonalLog::class, 'user_id');
+    }
 }

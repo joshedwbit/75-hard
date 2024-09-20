@@ -19,4 +19,14 @@ class PersonalLog extends Model
         'general_notes',
         'user_id',
     ];
+
+    /**
+     * Explain relationship between users and logs
+     *
+     * @return void
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
