@@ -15,4 +15,15 @@ class BaseController extends Controller
     {
         return auth('web')->check();
     }
+
+    /**
+     * Sanitize input strings
+     *
+     * @param string $string
+     * @return string
+     */
+    public function stripTags(string $string): string
+    {
+        return strip_tags($string);
+    }
 }
