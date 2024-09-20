@@ -102,6 +102,11 @@
     <h3>Past entries:</h3>
 
     @foreach($logs as $log)
+    @if ($todays_entry)
+        @if ($loop->first)
+            @continue
+        @endif
+    @endif
     <div style="
     width:1000px;
     display:grid;
