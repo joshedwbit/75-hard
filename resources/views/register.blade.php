@@ -3,7 +3,7 @@
 @section('content')
 <section>
     @auth
-    <p>You are already logged in!</p>
+    <p>You are already logged in! <a href="/home" class="">Home</a></p>
     @include('partials._logout')
     @else
 
