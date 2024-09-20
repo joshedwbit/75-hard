@@ -17,7 +17,7 @@ class HomeController extends BaseController
     public function Home() {
         $logs = [];
         if (self::isLoggedIn()) {
-            $logs = auth('web')->user()->userLogs()->latest()->get();
+            $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->get();
         }
 
         return view('home', [
