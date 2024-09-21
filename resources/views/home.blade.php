@@ -1,6 +1,13 @@
 @extends('base')
 
 @section('content')
+
+@php
+if ($todays_entry) {
+    $todays_entry_log = $todays_entry[0];
+}
+@endphp
+
 <section>
     <h1>75Hard tracker</h1>
 
@@ -8,15 +15,17 @@
     <p class="">Logged in as {{ auth()->user()->name }}</p>
     @include('partials._logout')
 
-    <h3>Add/edit todays entry:</h3>
-
+    <h3>{{ $todays_entry ? 'Edit' : 'Add' }} todays entry:</h3>
     {{-- if todays entry exists, display it and add option to edit  --}}
-    <form method="post" action="create-entry">
+    <form method="post" action="{{ $todays_entry ? '/edit-entry/' . $todays_entry_log['id'] : 'create-entry' }}">
         @csrf
+        @if ($todays_entry)
+        @method('PUT')
+        @endif
 
         <div class="field field--date">
             <label for="date">Date</label>
-            <input type="date" id="date" name="date" value={{ date("Y-m-d") }} max={{ date("Y-m-d")}} min="2020-01-01"/>
+            <input type="date" id="date" name="date" value={{ date("Y-m-d") }} max={{ date("Y-m-d")}} min="2020-01-01" {{ $todays_entry ? 'readonly' : '' }}/>
 
             @error('date')
             <p class="error">{{$message}}</p>
@@ -37,7 +46,7 @@
         <div class="field field--workout-notes">
             <label for="workout_notes">Workout notes</label>
 
-            <textarea name="workout_notes" id="workout_notes" rows="3" cols="50"></textarea>
+            <textarea name="workout_notes" id="workout_notes" rows="3" cols="50">{{ $todays_entry? $todays_entry_log['workout_notes'] : '' }}</textarea>
 
             @error('workout_notes')
             <p class="error">{{$message}}</p>
@@ -64,7 +73,7 @@
         <div class="field field--cheat-meals">
             <label for="cheat_meals">Cheat meals (comma separated)</label>
 
-            <textarea name="cheat_meals" id="cheat_meals" rows="3" cols="50"></textarea>
+            <textarea name="cheat_meals" id="cheat_meals" rows="3" cols="50">{{ $todays_entry? $todays_entry_log['cheat_meals'] : '' }}</textarea>
 
             @error('cheat_meals')
             <p class="error">{{$message}}</p>
@@ -74,7 +83,7 @@
         <div class="field field--pages-read">
             <label for="pages_read">Pages read</label>
 
-            <input type="number" step="1" min="0" max="1000" name="pages_read" id="pages_read" value="0"/>
+            <input type="number" step="1" min="0" max="1000" name="pages_read" id="pages_read" value="{{ $todays_entry? $todays_entry_log['pages_read'] : 0 }}"/>
 
             @error('pages_read')
             <p class="err">{{$message}}</p>
@@ -84,7 +93,7 @@
         <div class="field field--general-notes">
             <label for="general_notes">General notes</label>
 
-            <textarea name="general_notes" id="general_notes" rows="3" cols="50"></textarea>
+            <textarea name="general_notes" id="general_notes" rows="3" cols="50">{{ $todays_entry? $todays_entry_log['general_notes'] : '' }}</textarea>
 
             @error('general_notes')
             <p class="error">{{$message}}</p>
@@ -94,7 +103,7 @@
 
         <div class="submit">
             <button type="submit">
-                Save entry
+                {{ $todays_entry ? 'Update' : 'Save' }} entry
             </button>
         </div>
     </form>
