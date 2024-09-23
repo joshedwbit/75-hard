@@ -34,6 +34,10 @@
         </button>
     </form>
 
+    @if (count($logs) == 0)
+    No {{ $filtered ? 'results' : 'past entries'}} found.
+    @endif
+
     @foreach($logs as $log)
     @if ($todays_entry && !$filtered)
         @if ($loop->first)
@@ -72,8 +76,8 @@
         </form>
     </div>
     </div>
-
     @endforeach
+
     @else
     <p class="">Please select one of the following</p>
     <a href="/login">Login</a>
