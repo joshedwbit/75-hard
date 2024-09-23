@@ -91,7 +91,7 @@ $max_date = $new_past_entry ? date('Y-m-d', strtotime('-1 day')) : date("Y-m-d")
 
         <div class="submit">
             <button type="submit">
-                {{ $existing_entry ? 'Update' : 'Save' }} entry
+                {{ $edit_entry ? 'Save Changes' : ($existing_entry ? 'Update entry' : 'Save entry') }}
             </button>
         </div>
     </form>
