@@ -66,6 +66,12 @@ class LogController extends Controller
         return $submittedFields;
     }
 
+    /**
+     * Direct to edit view
+     *
+     * @param PersonalLog $log
+     * @return void
+     */
     public function editEntry(PersonalLog $log)
     {
         if (!$this->userMatchesLog($log)) {
@@ -77,6 +83,13 @@ class LogController extends Controller
         ]);
     }
 
+    /**
+     * Update an existing entry
+     *
+     * @param PersonalLog $log
+     * @param Request $request
+     * @return void
+     */
     public function updateEntry(PersonalLog $log, Request $request)
     {
         if ($this->userMatchesLog($log)) {
