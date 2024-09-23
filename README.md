@@ -4,11 +4,12 @@
 This is a fitness/diet tracker app built using the PHP Laravel framework.  Details about the 75Hard challenge can be found <a href="https://health.clevelandclinic.org/75-hard-challenge-and-rules">here</a>.
 
 The website can be used to log daily entries, where entries include items such as:
--Number of workouts
--Water count
--Cheat meals description
--Pages read
-and more
+<ul>
+<li>Number of workouts</li>
+<li>Water count</li>
+<li>Cheat meals description</li>
+<li>Pages read</li>
+</ul>
 
 <b>Project highlights:</b>
 <ul>
