@@ -5,6 +5,7 @@
     <form action="/edit-entry/{{$log['id']}}" METHOD="POST">
     @csrf
     @method('PUT')
+    {{-- todo this should extend new-entry partial  --}}
 
     {{-- todo workout this logic --}}
     <div class="field field--workouts">
