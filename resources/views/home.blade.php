@@ -70,7 +70,8 @@
     <div style="grid-area: water_header;">Water count</div>
     <div style="grid-area: pages_header;">Pages read</div>
 
-    <div style="grid-area: date; align-self: center;"><a href="/log/{{$log['id']}}">{{ $log['date'] }}</a></div>
+    {{-- <div style="grid-area: date; align-self: center;"><a href="/log/{{$log['id']}}">{{ $log['date'] }}</a></div> --}}
+    <div style="grid-area: date; align-self: center;">{{ $log['date'] }}</div>
     <div style="grid-area: workouts;">{{$log['workouts']}}</div>
     <div style="grid-area: water_count;">{{$log['water_count']}}</div>
     <div style="grid-area: pages;">{{$log['pages_read']}}</div>
