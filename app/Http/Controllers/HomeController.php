@@ -26,6 +26,7 @@ class HomeController extends BaseController
         return view('home', [
             'logs' => $logs,
             'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
+            'filtered' => false,
         ]);
     }
 }

@@ -135,16 +135,18 @@ class LogController extends BaseController
      */
     public function filter(Request $request)
     {
+        if (!self::isLoggedIn()) {
+            return redirect('/home');
+        }
+
         $request->validate([
             'filter_date' => 'required',
         ]);
 
-        if (self::isLoggedIn()) {
-            $filteredQuery = PersonalLog::where('date', $request['filter_date'])
-                                ->where('user_id', auth('web')->id());
+        $filteredQuery = PersonalLog::where('date', $request['filter_date'])
+                                    ->where('user_id', auth('web')->id());
 
-            $todaysEntryQuery = PersonalLog::getTodaysEntryQuery();
-        }
+        $todaysEntryQuery = PersonalLog::getTodaysEntryQuery();
 
         return view('home', [
             'logs' => $filteredQuery->get(),
