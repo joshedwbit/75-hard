@@ -21,12 +21,15 @@ class HomeController extends BaseController
             $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->get();
 
             $todaysEntryQuery= PersonalLog::getTodaysEntryQuery();
+
+            $weeklyWaterCount = PersonalLog::getWeeklyWaterCount();
         }
 
         return view('home', [
             'logs' => $logs,
             'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
             'filtered' => false,
+            'weeklyWaterCount' => $weeklyWaterCount,
         ]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\PersonalLog;
+use Illuminate\Http\Request;
 
 class LogController extends BaseController
 {
@@ -147,11 +147,13 @@ class LogController extends BaseController
                                     ->where('user_id', auth('web')->id());
 
         $todaysEntryQuery = PersonalLog::getTodaysEntryQuery();
+        $weeklyWaterCount = PersonalLog::getWeeklyWaterCount();
 
         return view('home', [
             'logs' => $filteredQuery->get(),
             'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
             'filtered' => true,
+            'weeklyWaterCount' => $weeklyWaterCount,
         ]);
     }
 }

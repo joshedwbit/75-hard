@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PersonalLog extends Model
 {
@@ -39,5 +40,24 @@ class PersonalLog extends Model
     {
         return self::where('date', date("Y-m-d"))
                     ->where('user_id', auth('web')->id());
+    }
+
+    /**
+     * Get the water count for the current week
+     *
+     * @return integer
+     */
+    public static function getWeeklyWaterCount()
+    {
+        $userId = auth('web')->id();
+
+        $startOfWeek = Carbon::now()->startOfWeek();
+
+        $weeklyLogs = PersonalLog::where('user_id', $userId)
+                                // ->where('date', '>=', Carbon::now()->subDays(7))
+                                ->where('date', '>=', $startOfWeek)
+                                ->get();
+
+        return $weeklyLogs->sum('water_count');
     }
 }

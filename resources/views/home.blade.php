@@ -11,6 +11,9 @@
 
     @include('partials._new-entry', ['existing_entry' => $todays_entry ? $todays_entry[0] : null, 'new_past_entry' => null, 'edit_entry' => false])
 
+    @if ($todays_entry)
+    You have drank {{ $todays_entry[0]['water_count']}} bottles of water today, that's {{ $weeklyWaterCount }} this week!
+    @endif
 
     <h3>Past entries:</h3>
 
