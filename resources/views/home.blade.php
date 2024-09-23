@@ -9,7 +9,7 @@
     <p class="">Logged in as {{ auth()->user()->name }}</p>
     @include('partials._logout')
 
-    @include('partials._new-entry', ['todays_entry' => $todays_entry[0], 'new_past_entry' => null])
+    @include('partials._new-entry', ['todays_entry' => $todays_entry ? $todays_entry[0] : null, 'new_past_entry' => null])
 
 
     <h3>Past entries:</h3>
