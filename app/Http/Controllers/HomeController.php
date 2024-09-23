@@ -20,8 +20,7 @@ class HomeController extends BaseController
         if (self::isLoggedIn()) {
             $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->get();
 
-            $todaysEntryQuery= PersonalLog::where('date', date("Y-m-d"))
-                                        ->where('user_id', auth('web')->id());
+            $todaysEntryQuery= PersonalLog::getTodaysEntryQuery();
         }
 
         return view('home', [

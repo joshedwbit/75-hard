@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PersonalLog;
 
-class LogController extends Controller
+class LogController extends BaseController
 {
     /**
      * Handle entry submission
@@ -125,5 +125,31 @@ class LogController extends Controller
         }
 
         return redirect('/home');
+    }
+
+    /**
+     * Filter logs
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function filter(Request $request)
+    {
+        $request->validate([
+            'filter_date' => 'required',
+        ]);
+
+        if (self::isLoggedIn()) {
+            $filteredQuery = PersonalLog::where('date', $request['filter_date'])
+                                ->where('user_id', auth('web')->id());
+
+            $todaysEntryQuery = PersonalLog::getTodaysEntryQuery();
+        }
+
+        return view('home', [
+            'logs' => $filteredQuery->get(),
+            'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
+            'filtered' => true,
+        ]);
     }
 }

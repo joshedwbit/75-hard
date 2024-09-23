@@ -29,4 +29,15 @@ class PersonalLog extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     * pull todays entry from the db if it exists
+     *
+     * @return void
+     */
+    public static function getTodaysEntryQuery()
+    {
+        return self::where('date', date("Y-m-d"))
+                    ->where('user_id', auth('web')->id());
+    }
 }

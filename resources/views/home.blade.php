@@ -17,8 +17,25 @@
     <button class="">Add a past entry</button>
     @include('partials._new-entry', ['existing_entry' => null, 'new_past_entry' => true, 'edit_entry' => false])
 
+    <form action="/entries-filtered" method="POST">
+        @csrf
+
+        <div class="field">
+            <label for="filter_date">Filter Date</label>
+            <input type="date" id="filter_date" name="filter_date" value={{ date('Y-m-d', strtotime('-1 day')) }} max={{ date('Y-m-d', strtotime('-1 day')) }} min="2020-01-01"/>
+
+            @error('filter_date')
+            <p class="error">{{ $message }} </p>
+            @enderror
+        </div>
+
+        <button type="submit" class="submit">
+            Apply
+        </button>
+    </form>
+
     @foreach($logs as $log)
-    @if ($todays_entry)
+    @if ($todays_entry && !$filtered)
         @if ($loop->first)
             @continue
         @endif
