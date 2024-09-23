@@ -34,6 +34,14 @@
         </button>
     </form>
 
+    @if ($filtered)
+    <form action="/home" method="GET">
+        <button type="submit">
+            Remove filter
+        </button>
+    </form>
+    @endif
+
     @if (count($logs) == 0)
     No {{ $filtered ? 'results' : 'past entries'}} found.
     @endif
