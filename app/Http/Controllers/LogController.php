@@ -133,7 +133,7 @@ class LogController extends BaseController
      * @param Request $request
      * @return void
      */
-    public function filter(Request $request)
+    public function filterEntries(Request $request)
     {
         if (!self::isLoggedIn()) {
             return redirect('/home');

@@ -22,4 +22,4 @@ Route::put('/edit-entry/{log}', [LogController::class, 'updateEntry']);
 Route::delete('delete-entry/{log}', [LogController::class, 'deleteEntry']);
 
 // filter logs
-Route::post('/entries-filtered', [LogController::class, 'filter']);
+Route::post('/entries-filtered', [LogController::class, 'filterEntries']);
