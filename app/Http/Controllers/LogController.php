@@ -100,6 +100,12 @@ class LogController extends Controller
         return auth('web')->user()->id === $log['user_id'];
     }
 
+    /**
+     * Delete entry
+     *
+     * @param PersonalLog $log
+     * @return void
+     */
     public function deleteEntry(PersonalLog $log)
     {
         if ($this->userMatchesLog($log)) {
