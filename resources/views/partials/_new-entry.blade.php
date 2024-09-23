@@ -18,6 +18,7 @@ $max_date = $new_past_entry ? date('Y-m-d', strtotime('-1 day')) : date("Y-m-d")
             @enderror
         </div>
 
+        {{-- todo workout this logic --}}
         <div class="field field--workouts">
             <label for="workouts">Workouts</label>
 
@@ -39,6 +40,7 @@ $max_date = $new_past_entry ? date('Y-m-d', strtotime('-1 day')) : date("Y-m-d")
             @enderror
         </div>
 
+        {{-- todo workout this logic --}}
         <div class="field field--water-count">
             <label for="water_count">Water count</label>
 
