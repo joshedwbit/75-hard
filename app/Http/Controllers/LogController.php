@@ -38,11 +38,10 @@ class LogController extends Controller
      * @param Request $request
      * @return array
      */
-    public function cleanLogFields(Request $request, $new=true, $requireDate=true)
+    public function cleanLogFields(Request $request, $new=true)
     {
-        // todo clean args
         $submittedFields = $request->validate([
-            'date' => $requireDate ? 'required' : 'nullable',
+            'date' => 'required',
             'workouts' => 'nullable|array',
             'workouts*' => 'integer|in:1,2',
             'workout_notes' => 'nullable|string|max:100',
@@ -81,7 +80,7 @@ class LogController extends Controller
     public function updateEntry(PersonalLog $log, Request $request)
     {
         if ($this->userMatchesLog($log)) {
-            $submittedFields = $this->cleanLogFields($request, false, false);
+            $submittedFields = $this->cleanLogFields($request, false);
 
             $log->update($submittedFields);
         }
