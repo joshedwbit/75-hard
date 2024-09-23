@@ -9,13 +9,13 @@
     <p class="">Logged in as {{ auth()->user()->name }}</p>
     @include('partials._logout')
 
-    @include('partials._new-entry', ['todays_entry' => $todays_entry ? $todays_entry[0] : null, 'new_past_entry' => null])
+    @include('partials._new-entry', ['existing_entry' => $todays_entry ? $todays_entry[0] : null, 'new_past_entry' => null, 'edit_entry' => false])
 
 
     <h3>Past entries:</h3>
 
     <button class="">Add a past entry</button>
-    @include('partials._new-entry', ['todays_entry' => null, 'new_past_entry' => true])
+    @include('partials._new-entry', ['existing_entry' => null, 'new_past_entry' => true, 'edit_entry' => false])
 
     @foreach($logs as $log)
     @if ($todays_entry)
