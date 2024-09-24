@@ -1,5 +1,11 @@
 @php
 $max_date = $new_past_entry ? date('Y-m-d', strtotime('-1 day')) : date("Y-m-d");
+$waterCount = $existing_entry['water_count'] ?? 0;
+$workoutCount = $existing_entry['workouts'] ?? 0;
+
+// could be put in controller/added to db and pulled in model, but fine here for now
+$totalWorkoutCheckboxes = 2;
+$totalWaterCheckboxes = 8;
 @endphp
 
 <h3>{{ $existing_entry ? 'Edit' : 'Add' }} {{ $new_past_entry ? 'past' : ($edit_entry ? '' : 'todays') }} entry:</h3>
@@ -18,12 +24,12 @@ $max_date = $new_past_entry ? date('Y-m-d', strtotime('-1 day')) : date("Y-m-d")
             @enderror
         </div>
 
-        {{-- todo workout this logic --}}
         <div class="field field--workouts">
             <label for="workouts">Workouts</label>
 
-            <input type="checkbox" name="workouts[]" value="1">1st workout
-            <input type="checkbox" name="workouts[]" value="2">2nd workout
+            @for ($i = 1; $i <= $totalWorkoutCheckboxes; $i++)
+            <input type="checkbox" name="workouts[]" value="{{ $i }}" {{ $workoutCount >= $i ? 'checked' : '' }}>workout {{$i}}
+            @endfor
 
             @error('workouts')
             <p class="error">{{$message}}</p>
@@ -40,18 +46,12 @@ $max_date = $new_past_entry ? date('Y-m-d', strtotime('-1 day')) : date("Y-m-d")
             @enderror
         </div>
 
-        {{-- todo workout this logic --}}
         <div class="field field--water-count">
             <label for="water_count">Water count</label>
 
-            <input type="checkbox" name="water_count[]" value="1">1
-            <input type="checkbox" name="water_count[]" value="2">2
-            <input type="checkbox" name="water_count[]" value="3">3
-            <input type="checkbox" name="water_count[]" value="4">4
-            <input type="checkbox" name="water_count[]" value="5">5
-            <input type="checkbox" name="water_count[]" value="6">6
-            <input type="checkbox" name="water_count[]" value="7">7
-            <input type="checkbox" name="water_count[]" value="8">8
+            @for ($i=1; $i <= $totalWaterCheckboxes; $i++)
+            <input type="checkbox" name="water_count[]" value="{{ $i }}" {{ $waterCount >= $i ? 'checked' : '' }}>{{ $i}}
+            @endfor
 
             @error('water_count')
             <p class="error">{{$message}}</p>
