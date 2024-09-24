@@ -11,7 +11,7 @@ $max_date = $new_past_entry ? date('Y-m-d', strtotime('-1 day')) : date("Y-m-d")
 
         <div class="field field--date">
             <label for="date">Date</label>
-            <input type="date" id="date" name="date" value={{ $edit_entry ? $existing_entry['date'] : $max_date }} max={{ $max_date }} min="2020-01-01" {{ $existing_entry ? 'readonly' : '' }}/>
+            <input type="date" id="date" name="date" value={{ $edit_entry ? $existing_entry['date'] : $max_date }} max={{ $max_date }} min="2020-01-01" {{ $new_past_entry ? '' : 'readonly' }}/>
 
             @error('date')
             <p class="error">{{$message}}</p>
