@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Collection;
 
 class PersonalLog extends Model
 {
@@ -59,5 +61,40 @@ class PersonalLog extends Model
                                 ->get();
 
         return $weeklyLogs->sum('water_count');
+    }
+
+    /**
+     * Check if an entry for a given date already exists
+     *
+     * @param String $date
+     * @return boolean
+     */
+    public static function existingRecordExists(String $date): bool
+    {
+        return self::where('date', $date)
+                    ->where('user_id', auth('web')->id())
+                    ->exists();
+    }
+
+    /**
+     * Filter logs by date
+     *
+     * @param String $date
+     * @return Builder
+     */
+    public static function filterDate(String $date): Builder
+    {
+        return self::where('date', $date)
+                    ->where('user_id', auth('web')->id());
+    }
+
+    /**
+     * Get user's logs
+     *
+     * @return Collection
+     */
+    public static function getUserPosts(): Collection
+    {
+        return auth('web')->user()->userLogs()->orderBy('date', 'desc')->get();
     }
 }

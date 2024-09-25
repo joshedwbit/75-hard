@@ -19,7 +19,7 @@ class HomeController extends BaseController
         $todaysEntryQuery = PersonalLog::query();
         $weeklyWaterCount = 0;
         if (self::isLoggedIn()) {
-            $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->get();
+            $logs = PersonalLog::getUserPosts();
 
             $todaysEntryQuery= PersonalLog::getTodaysEntryQuery();
 

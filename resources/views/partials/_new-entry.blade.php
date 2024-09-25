@@ -17,7 +17,7 @@ $totalWaterCheckboxes = 8;
 
         <div class="field field--date">
             <label for="date">Date</label>
-            <input type="date" id="date" name="date" value={{ $edit_entry ? $existing_entry['date'] : $max_date }} max={{ $max_date }} min="2020-01-01" {{ $new_past_entry ? '' : 'readonly' }}/>
+            <input type="date" id="date" name="date" class="js-date-picker {{ $new_past_entry ? '' : 'readonly' }}" data-value="{{ $edit_entry ? $existing_entry['date'] : $max_date }}" data-max="{{ $max_date }}" data-min="2022-01-01">
 
             @error('date')
             <p class="error">{{$message}}</p>

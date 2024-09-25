@@ -1,1 +1,6 @@
 // base sass file
+@import "plugins/plugins.scss";
+
+input.readonly {
+    pointer-events: none;
+}

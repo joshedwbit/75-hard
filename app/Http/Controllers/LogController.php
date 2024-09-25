@@ -15,9 +15,7 @@ class LogController extends BaseController
      */
     public function createEntry(Request $request)
     {
-        $existingRecord = PersonalLog::where('date', $request['date'])
-                                    ->where('user_id', auth('web')->id())
-                                    ->exists();
+        $existingRecord = PersonalLog::existingRecordExists($request['date']);
 
         if ($existingRecord) {
             return back()->withErrors([
@@ -143,8 +141,7 @@ class LogController extends BaseController
             'filter_date' => 'required',
         ]);
 
-        $filteredQuery = PersonalLog::where('date', $request['filter_date'])
-                                    ->where('user_id', auth('web')->id());
+        $filteredQuery = PersonalLog::filterDate($request['filter_date']);
 
         $todaysEntryQuery = PersonalLog::getTodaysEntryQuery();
         $weeklyWaterCount = PersonalLog::getWeeklyWaterCount();
@@ -154,6 +151,7 @@ class LogController extends BaseController
             'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
             'filtered' => true,
             'weeklyWaterCount' => $weeklyWaterCount,
+            'filtered_date' => $request['filter_date'],
         ]);
     }
 }

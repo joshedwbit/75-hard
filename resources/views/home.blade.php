@@ -30,7 +30,7 @@
 
         <div class="field">
             <label for="filter_date">Filter Date</label>
-            <input type="date" id="filter_date" name="filter_date" value={{ date('Y-m-d', strtotime('-1 day')) }} max={{ date('Y-m-d', strtotime('-1 day')) }} min="2020-01-01"/>
+            <input type="date" id="filter_date" name="filter_date" data-filtered-date="{{ $filtered_date ?? '' }}" class="js-filter-date-picker">
 
             @error('filter_date')
             <p class="error">{{ $message }} </p>
