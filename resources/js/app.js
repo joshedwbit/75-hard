@@ -24,15 +24,36 @@ handleCheckboxLogic(pastWorkoutCheckboxes);
 
 // flatpickr
 let dateFilteredPickerInput = document.querySelector('.js-filter-date-picker');
-let filteredDate = dateFilteredPickerInput.getAttribute('data-filtered-date');
+if (dateFilteredPickerInput) {
+    let filteredDate = dateFilteredPickerInput.getAttribute('data-filtered-date');
 
-flatpickr(dateFilteredPickerInput, {
-    dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "d-m-Y",
-    // altFormat: "F j, Y",
-    defaultDate: filteredDate || new Date().fp_incr(-1),
-    maxDate: new Date().fp_incr(-1),
-    minDate: "2022-01-01",
-    inline: true,
-});
+    flatpickr(dateFilteredPickerInput, {
+        dateFormat: "Y-m-d",
+        altInput: true,
+        altFormat: "d-m-Y",
+        // altFormat: "F j, Y",
+        defaultDate: filteredDate || new Date().fp_incr(-1),
+        maxDate: new Date().fp_incr(-1),
+        minDate: "2022-01-01",
+        inline: true,
+    });
+}
+
+let datePickerInput = document.querySelectorAll('.js-date-picker');
+if (datePickerInput) {
+    datePickerInput.forEach(dateInput => {
+        let dateValue = dateInput.getAttribute('data-value');
+        let dateMax = dateInput.getAttribute('data-max');
+        let dateMin = dateInput.getAttribute('data-min');
+
+        flatpickr(dateInput, {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d-m-Y",
+            // altFormat: "F j, Y",
+            defaultDate: dateValue,
+            maxDate: dateMax,
+            minDate: dateMin,
+        });
+    });
+}
