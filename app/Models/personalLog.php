@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Collection;
 
 class PersonalLog extends Model
 {
@@ -85,5 +86,15 @@ class PersonalLog extends Model
     {
         return self::where('date', $date)
                     ->where('user_id', auth('web')->id());
+    }
+
+    /**
+     * Get user's logs
+     *
+     * @return Collection
+     */
+    public static function getUserPosts(): Collection
+    {
+        return auth('web')->user()->userLogs()->orderBy('date', 'desc')->get();
     }
 }
