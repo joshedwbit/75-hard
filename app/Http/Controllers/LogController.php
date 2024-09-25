@@ -154,6 +154,7 @@ class LogController extends BaseController
             'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
             'filtered' => true,
             'weeklyWaterCount' => $weeklyWaterCount,
+            'filtered_date' => $request['filter_date'],
         ]);
     }
 }
