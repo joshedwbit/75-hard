@@ -30,7 +30,7 @@ class HomeController extends BaseController
             'logs' => $logs,
             'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
             'filtered' => false,
-            'weeklyWaterCount' => $weeklyWaterCount,
+            'weekly_water_count' => $weeklyWaterCount,
         ]);
     }
 }
