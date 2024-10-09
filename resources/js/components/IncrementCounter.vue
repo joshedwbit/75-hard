@@ -11,7 +11,12 @@
     </p>
   </div>
 
-  <Footer message="Contact us on social media!" :socialsArray="['facebook', 'youtube', 'twitter']"></Footer>
+  <Footer message="Contact us on social media!" :socialsArray="['facebook', 'youtube', 'twitter']">
+    website 5 stars
+    <template v-slot:HomeLink>
+      <a href="#">Home</a>
+    </template>
+  </Footer>
 </section>
 
 </template>
