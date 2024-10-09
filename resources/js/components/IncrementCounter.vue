@@ -11,7 +11,7 @@
     </p>
   </div>
 
-  <Footer />
+  <Footer message="Contact us on social media!" :socialsArray="['facebook', 'youtube', 'twitter']"></Footer>
 </section>
 
 </template>
