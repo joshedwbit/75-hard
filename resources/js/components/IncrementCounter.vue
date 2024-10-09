@@ -1,4 +1,8 @@
 <template>
+<section class="vue-playabout">
+  <div>
+    <button @click="toggleDetails">Hide Details</button>
+  </div>
   <div v-if="showDetails">
     <p :class="{ 'highlight': highlightTitle }" class="my-title">{{ title }}</p>
     <button @click="toggleHighlight">Higlight title</button>
@@ -7,11 +11,9 @@
     </p>
   </div>
 
-  <div>
-    <button @click="toggleDetails">Show Details</button>
-  </div>
-</template>
+</section>
 
+</template>
 <script>
 export default {
     data() {
@@ -36,5 +38,8 @@ export default {
 <style>
 .highlight {
     background-color: red;
+}
+.vue-playabout {
+    background-color: pink;
 }
 </style>
