@@ -100,5 +100,9 @@
     <a href="/login">Login</a>
     <a href="/register">Sign up</a>
     @endauth
+
+    <div class="">
+        <increment-counter />
+    </div>
 </section>
 @endsection

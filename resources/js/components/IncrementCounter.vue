@@ -1,0 +1,55 @@
+<template>
+<section class="vue-playabout">
+  <div>
+    <button @click="toggleDetails">Hide Details</button>
+  </div>
+  <div v-if="showDetails">
+    <p :class="{ 'highlight': highlightTitle }" class="my-title">{{ title }}</p>
+    <button @click="toggleHighlight">Higlight title</button>
+    <p>
+        <a :href="url">cr7</a>
+    </p>
+  </div>
+
+  <Footer message="Contact us on social media!" :socialsArray="['facebook', 'youtube', 'twitter']">
+    website 5 stars
+    <template v-slot:HomeLink>
+      <a href="#">Home</a>
+    </template>
+  </Footer>
+</section>
+
+</template>
+<script>
+import Footer from './Footer.vue';
+export default {
+    components: {
+        Footer
+    },
+    data() {
+        return {
+            title: 'hello world',
+            showDetails: true,
+            url: 'https://en.wikipedia.org/wiki/Cristiano_Ronaldo',
+            highlightTitle: false,
+        };
+    },
+    methods: {
+        toggleDetails() {
+            this.showDetails = !this.showDetails;
+        },
+        toggleHighlight() {
+            this.highlightTitle = !this.highlightTitle;
+        },
+    }
+}
+</script>
+
+<style>
+.highlight {
+    background-color: red;
+}
+.vue-playabout {
+    background-color: pink;
+}
+</style>
