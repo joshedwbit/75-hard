@@ -11,11 +11,16 @@
     </p>
   </div>
 
+  <Footer />
 </section>
 
 </template>
 <script>
+import Footer from './Footer.vue';
 export default {
+    components: {
+        Footer
+    },
     data() {
         return {
             title: 'hello world',
