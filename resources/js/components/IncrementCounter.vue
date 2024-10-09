@@ -6,6 +6,7 @@
   <div v-if="showDetails">
     <p :class="{ 'highlight': highlightTitle }" class="my-title">{{ title }}</p>
     <button @click="toggleHighlight">Higlight title</button>
+    <button @click="celebrate" ref="celebration_button">Celebrate!</button>
     <p>
         <a :href="url">cr7</a>
     </p>
@@ -30,6 +31,9 @@ export default {
         },
         toggleHighlight() {
             this.highlightTitle = !this.highlightTitle;
+        },
+        celebrate() {
+            console.log(this.$refs.celebration_button);
         }
     }
 }
