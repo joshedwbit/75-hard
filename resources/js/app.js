@@ -2,6 +2,7 @@ import './bootstrap';
 import { handleCheckboxLogic } from './checkbox-handler'
 import { createApp } from 'vue';
 import IncrementCounter from './components/IncrementCounter.vue';
+import '../css/app.css';
 
 let waterCountCheckboxes = document.querySelectorAll('.js-todays-entry input[name="water_count[]"]');
 let workoutCheckboxes = document.querySelectorAll('.js-todays-entry input[name="workouts[]"]');
