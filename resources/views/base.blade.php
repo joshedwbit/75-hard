@@ -11,7 +11,7 @@
     @yield('scripts')
     <title>Document</title>
 </head>
-<body>
+<body id="app">
     <header></header>
 
     <main>
