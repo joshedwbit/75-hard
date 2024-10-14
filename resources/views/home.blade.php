@@ -20,7 +20,7 @@
     <h3>Your week so far:</h3>
 
     @if (count($this_weeks_logs) == 0)
-        {{ $is_monday ? 'It\'s the start of a new week!'  : 'No past entries found for this week' }}.
+        {{ $is_monday ? 'It\'s the start of a new week!'  : 'No past entries found for this week.' }}
     @endif
 
     @foreach($this_weeks_logs as $log)

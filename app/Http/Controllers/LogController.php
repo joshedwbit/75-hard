@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\PersonalLog;
 use App\Http\Controllers\BaseController;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class LogController extends BaseController
 {
@@ -61,7 +62,7 @@ class LogController extends BaseController
 
         PersonalLog::create($submittedFields);
 
-        return redirect('/home');
+        return redirect('/past-entries');
     }
 
     /**

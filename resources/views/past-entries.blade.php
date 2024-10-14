@@ -1,5 +1,9 @@
 @extends('base')
 
+@section('scripts')
+    @vite('resources/js/new-past-entry.js')
+@endsection
+
 @section('content')
 <section>
     <div>
@@ -7,9 +11,9 @@
     </div>
     <h3>Past entries:</h3>
 
-    <button class="">Add a past entry</button>
+    <button class="js-new-past-entry">Add a past entry</button>
 
-    <div class="js-past-entry">
+    <div class="js-past-entry js-past-entry-container past_entry--container hidden">
         @include('partials._new-entry', ['existing_entry' => null, 'new_past_entry' => true, 'edit_entry' => false])
     </div>
 
