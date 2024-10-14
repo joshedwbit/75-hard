@@ -16,17 +16,21 @@ class LogController extends BaseController
      */
     public function Home()
     {
+        $isLoggedIn = self::isLoggedIn();
+
+        if (!$isLoggedIn) {
+            return redirect('/home');
+        }
+
         $allLogs = [];
         $pastLogs = [];
         $startOfCurrentWeek = Carbon::now()->startOfWeek();
 
-        if (self::isLoggedIn()) {
-            $baseQuery = auth('web')->user()->userLogs()->orderBy('date', 'desc');
-            $allLogs= $baseQuery->get();
-            $pastLogs = (clone $baseQuery)
-                ->where('date', '<', $startOfCurrentWeek)
-                ->get();
-        }
+        $baseQuery = auth('web')->user()->userLogs()->orderBy('date', 'desc');
+        $allLogs= $baseQuery->get();
+        $pastLogs = (clone $baseQuery)
+            ->where('date', '<', $startOfCurrentWeek)
+            ->get();
 
         return view('/past-entries', [
             'all_logs' => $allLogs,
