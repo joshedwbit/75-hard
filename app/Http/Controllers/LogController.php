@@ -23,19 +23,12 @@ class LogController extends BaseController
             return redirect('/home');
         }
 
-        $allLogs = [];
-        $pastLogs = [];
-        $startOfCurrentWeek = Carbon::now()->startOfWeek();
+        $logs = [];
 
-        $baseQuery = auth('web')->user()->userLogs()->orderBy('date', 'desc');
-        $allLogs= $baseQuery->get();
-        $pastLogs = (clone $baseQuery)
-            ->where('date', '<', $startOfCurrentWeek)
-            ->get();
+        $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->get();
 
         return view('/past-entries', [
-            'all_logs' => $allLogs,
-            'past_logs' => $pastLogs,
+            'logs' => $logs,
             'filtered' => false,
         ]);
     }
@@ -108,7 +101,7 @@ class LogController extends BaseController
     public function editEntry(PersonalLog $log)
     {
         if (!$this->userMatchesLog($log)) {
-            return redirect('/home');
+            return back();
         }
 
         return view('edit-entry', [
@@ -131,7 +124,7 @@ class LogController extends BaseController
             $log->update($submittedFields);
         }
 
-        return redirect('/home');
+        return back()->with('status', 'Data saved successfully!');
     }
 
     /**
@@ -157,7 +150,7 @@ class LogController extends BaseController
             $log->delete();
         }
 
-        return redirect('/home');
+        return back();
     }
 
     /**
@@ -179,14 +172,9 @@ class LogController extends BaseController
         $filteredQuery = PersonalLog::where('date', $request['filter_date'])
                                     ->where('user_id', auth('web')->id());
 
-        $todaysEntryQuery = PersonalLog::getTodaysEntryQuery();
-        $weeklyWaterCount = PersonalLog::getWeeklyWaterCount();
-
-        return view('home', [
+        return view('/past-entries', [
             'logs' => $filteredQuery->get(),
-            'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
             'filtered' => true,
-            'weekly_water_count' => $weeklyWaterCount,
             'filtered_date' => $request['filter_date'],
         ]);
     }

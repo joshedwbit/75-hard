@@ -9,13 +9,15 @@
     <div>
         <a href="/home" class="">Back to home</a>
     </div>
-    <h3>Past entries:</h3>
+    <h1>Past Entries</h1>
 
     <button class="js-new-past-entry">Add a past entry</button>
 
     <div class="js-past-entry js-past-entry-container past_entry--container hidden">
         @include('partials._new-entry', ['existing_entry' => null, 'new_past_entry' => true, 'edit_entry' => false])
     </div>
+
+    <h3>Filter:</h3>
 
     <form action="/entries-filtered" method="POST">
         @csrf
@@ -35,7 +37,7 @@
     </form>
 
     @if ($filtered)
-    <form action="/home" method="GET">
+    <form action="/past-entries" method="GET">
         <button type="submit">
             Remove filter
         </button>
@@ -44,11 +46,11 @@
 
     <h3>Your past entries:</h3>
 
-    @if (count($all_logs) == 0)
+    @if (count($logs) == 0)
         {{ $filtered ? 'No results found' : ($is_monday ? 'It\'s the start of a new week!'  : 'No past entries found for this week')}}.
     @endif
 
-    @foreach($all_logs as $log)
+    @foreach($logs as $log)
     @if (!$filtered)
         @if ($loop->first)
             @continue

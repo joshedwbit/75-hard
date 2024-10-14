@@ -19,7 +19,7 @@
 
     <h3>Your week so far:</h3>
 
-    @if (count($this_weeks_logs) == 0)
+    @if (count($this_weeks_logs) <= 1)
         {{ $is_monday ? 'It\'s the start of a new week!'  : 'No past entries found for this week.' }}
     @endif
 
