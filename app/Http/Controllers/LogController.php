@@ -24,8 +24,8 @@ class LogController extends BaseController
         }
 
         $logs = [];
-
-        $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->get();
+        $itemsPerPage = 5;
+        $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->paginate($itemsPerPage);
 
         return view('/past-entries', [
             'logs' => $logs,

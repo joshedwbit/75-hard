@@ -47,48 +47,52 @@
     <h3>Your past entries:</h3>
 
     @if (count($logs) == 0)
-        {{ $filtered ? 'No results found' : ($is_monday ? 'It\'s the start of a new week!'  : 'No past entries found for this week')}}.
+        {{ $filtered ? 'No results found' :  'No past entries found for this week' }}.
     @endif
 
     @foreach($logs as $log)
-    @if (!$filtered)
-        @if ($loop->first)
-            @continue
+        <div style="
+        width:1000px;
+        display:grid;
+        grid-template-areas:
+        'date workouts_header water_header pages_header edit delete'
+        'date workouts water_count pages edit delete';
+        grid-template-rows: auto;
+        grid-template-columns: 2fr 2fr 2fr 2fr 1fr 1fr;
+        justify-items: center;
+        justify-content: start;
+        padding: 50px 0;">
+            <div style="grid-area: workouts_header;">Workouts</div>
+            <div style="grid-area: water_header;">Water count</div>
+            <div style="grid-area: pages_header;">Pages read</div>
+
+            {{-- <div style="grid-area: date; align-self: center;"><a href="/log/{{$log['id']}}">{{ $log['date'] }}</a></div> --}}
+            <div style="grid-area: date; align-self: center;">{{ $log['date'] }}</div>
+            <div style="grid-area: workouts;">{{$log['workouts']}}</div>
+            <div style="grid-area: water_count;">{{$log['water_count']}}</div>
+            <div style="grid-area: pages;">{{$log['pages_read']}}</div>
+
+            <div style="grid-area: edit; align-self: center;">
+                <a href="/edit-entry/{{$log['id']}}" class="">Edit</a>
+            </div>
+
+            <div style="grid-area: delete; align-self: center;">
+                <form action="/delete-entry/{{$log['id']}}" method="POST" class="">
+                    @csrf
+                    @method('DELETE')
+                    <button class="">Remove</button>
+                </form>
+            </div>
+        </div>
+
+        @endforeach
+
+        @if (!$filtered)
+        <div>
+            Showing {{ $logs->firstItem() }} to {{ $logs->lastItem() }} of {{ $logs->total() }} logs.
+        </div>
+
+        {{ $logs->links() }}
         @endif
-    @endif
-    <div style="
-    width:1000px;
-    display:grid;
-    grid-template-areas:
-    'date workouts_header water_header pages_header edit delete'
-    'date workouts water_count pages edit delete';
-    grid-template-rows: auto;
-    grid-template-columns: 2fr 2fr 2fr 2fr 1fr 1fr;
-    justify-items: center;
-    justify-content: start;
-    padding: 50px 0;">
-    <div style="grid-area: workouts_header;">Workouts</div>
-    <div style="grid-area: water_header;">Water count</div>
-    <div style="grid-area: pages_header;">Pages read</div>
-
-    {{-- <div style="grid-area: date; align-self: center;"><a href="/log/{{$log['id']}}">{{ $log['date'] }}</a></div> --}}
-    <div style="grid-area: date; align-self: center;">{{ $log['date'] }}</div>
-    <div style="grid-area: workouts;">{{$log['workouts']}}</div>
-    <div style="grid-area: water_count;">{{$log['water_count']}}</div>
-    <div style="grid-area: pages;">{{$log['pages_read']}}</div>
-
-    <div style="grid-area: edit; align-self: center;">
-        <a href="/edit-entry/{{$log['id']}}" class="">Edit</a>
-    </div>
-
-    <div style="grid-area: delete; align-self: center;">
-        <form action="/delete-entry/{{$log['id']}}" method="POST" class="">
-            @csrf
-            @method('DELETE')
-            <button class="">Remove</button>
-        </form>
-    </div>
-    </div>
-    @endforeach
 </section>
 @endsection
