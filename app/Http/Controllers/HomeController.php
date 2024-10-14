@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\PersonalLog;
 use App\Http\Controllers\BaseController;
-use App\Models\User;
+use Carbon\Carbon;
 
 class HomeController extends BaseController
 {
@@ -15,11 +15,17 @@ class HomeController extends BaseController
      * @return void
      */
     public function Home() {
-        $logs = [];
+        $thisWeeksLogs = [];
         $todaysEntryQuery = PersonalLog::query();
         $weeklyWaterCount = 0;
+        $startOfCurrentWeek = Carbon::now()->startOfWeek();
+        $isMonday = Carbon::now()->isMonday();
+
         if (self::isLoggedIn()) {
-            $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->get();
+            $thisWeeksLogs = auth('web')->user()->userLogs()
+                ->where('date', '>=', $startOfCurrentWeek)
+                ->orderBy('date', 'desc')
+                ->get();
 
             $todaysEntryQuery= PersonalLog::getTodaysEntryQuery();
 
@@ -27,10 +33,11 @@ class HomeController extends BaseController
         }
 
         return view('home', [
-            'logs' => $logs,
+            'this_weeks_logs' => $thisWeeksLogs,
             'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
             'filtered' => false,
             'weekly_water_count' => $weeklyWaterCount,
+            'is_monday' => $isMonday,
         ]);
     }
 }

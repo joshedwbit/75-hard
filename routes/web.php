@@ -15,6 +15,7 @@ Route::post('/login', [UserController::class, 'userLogin']);
 Route::post('/new-user', [UserController::class, 'registerNewUser']);
 
 Route::post('/create-entry', [LogController::class, 'createEntry']);
+Route::get('/past-entries', [LogController::class, 'Home']);
 
 // edit/delete logs
 Route::get('/edit-entry/{log}', [LogController::class, 'editEntry']);

@@ -2,11 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\PersonalLog;
-use Illuminate\Http\Request;
+use App\Http\Controllers\BaseController;
+use Carbon\Carbon;
 
 class LogController extends BaseController
 {
+    /**
+     * Direct to past entries view
+     *
+     * @return void
+     */
+    public function Home()
+    {
+        $allLogs = [];
+        $pastLogs = [];
+        $startOfCurrentWeek = Carbon::now()->startOfWeek();
+
+        if (self::isLoggedIn()) {
+            $baseQuery = auth('web')->user()->userLogs()->orderBy('date', 'desc');
+            $allLogs= $baseQuery->get();
+            $pastLogs = (clone $baseQuery)
+                ->where('date', '<', $startOfCurrentWeek)
+                ->get();
+        }
+
+        return view('/past-entries', [
+            'all_logs' => $allLogs,
+            'past_logs' => $pastLogs,
+            'filtered' => false,
+        ]);
+    }
+
     /**
      * Handle entry submission
      *
