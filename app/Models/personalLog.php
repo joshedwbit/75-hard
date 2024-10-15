@@ -103,6 +103,36 @@ class PersonalLog extends Model
     }
 
     /**
+     * Get the pages read count for the current week
+     *
+     * @return int
+     */
+    public static function getWeeklyPagesReadCount()
+    {
+        return self::getSummaries('pages_read', Carbon::now()->startOfWeek());
+    }
+
+    /**
+     * Get the pages read count for the current month
+     *
+     * @return int
+     */
+    public static function getMonthlyPagesReadCount()
+    {
+        return self::getSummaries('pages_read', Carbon::now()->startOfMonth());
+    }
+
+    /**
+     * Get the all time pages read count
+     *
+     * @return int
+     */
+    public static function getAllTimePagesReadCount()
+    {
+        return self::getSummaries('pages_read');
+    }
+
+    /**
      * Get Summaries for a specified field and time period
      *
      * @param Carbon|null $timePeriod
