@@ -55,7 +55,7 @@ class LogController extends BaseController
 
         PersonalLog::create($submittedFields);
 
-        return redirect('/past-entries');
+        return back()->with('status', 'Data saved successfully!');;
     }
 
     /**
@@ -124,7 +124,7 @@ class LogController extends BaseController
             $log->update($submittedFields);
         }
 
-        return back()->with('status', 'Data saved successfully!');
+        return back()->with('status', 'Data updated successfully!');
     }
 
     /**

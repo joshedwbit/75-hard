@@ -94,4 +94,10 @@ $totalWaterCheckboxes = 8;
                 {{ $edit_entry ? 'Save Changes' : ($existing_entry ? 'Update entry' : 'Save entry') }}
             </button>
         </div>
+
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
     </form>
