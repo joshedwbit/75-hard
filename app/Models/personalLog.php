@@ -133,6 +133,16 @@ class PersonalLog extends Model
     }
 
     /**
+     * Get total days logged
+     *
+     * @return int
+     */
+    public static function getTotalDaysLogged()
+    {
+        return count(auth('web')->user()->userLogs()->get());
+    }
+
+    /**
      * Get Summaries for a specified field and time period
      *
      * @param Carbon|null $timePeriod
