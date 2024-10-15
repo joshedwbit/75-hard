@@ -2,11 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\PersonalLog;
+use App\Http\Controllers\BaseController;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LogController extends BaseController
 {
+    /**
+     * Direct to past entries view
+     *
+     * @return void
+     */
+    public function Home()
+    {
+        $isLoggedIn = self::isLoggedIn();
+
+        if (!$isLoggedIn) {
+            return redirect('/home');
+        }
+
+        $logs = [];
+        $itemsPerPage = 5;
+        $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->paginate($itemsPerPage);
+
+        return view('/past-entries', [
+            'logs' => $logs,
+            'filtered' => false,
+        ]);
+    }
+
     /**
      * Handle entry submission
      *
@@ -29,7 +55,7 @@ class LogController extends BaseController
 
         PersonalLog::create($submittedFields);
 
-        return redirect('/home');
+        return back()->with('status', 'Data saved successfully!');;
     }
 
     /**
@@ -75,7 +101,7 @@ class LogController extends BaseController
     public function editEntry(PersonalLog $log)
     {
         if (!$this->userMatchesLog($log)) {
-            return redirect('/home');
+            return back();
         }
 
         return view('edit-entry', [
@@ -98,7 +124,7 @@ class LogController extends BaseController
             $log->update($submittedFields);
         }
 
-        return redirect('/home');
+        return back()->with('status', 'Data updated successfully!');
     }
 
     /**
@@ -124,7 +150,7 @@ class LogController extends BaseController
             $log->delete();
         }
 
-        return redirect('/home');
+        return back();
     }
 
     /**
@@ -146,14 +172,9 @@ class LogController extends BaseController
         $filteredQuery = PersonalLog::where('date', $request['filter_date'])
                                     ->where('user_id', auth('web')->id());
 
-        $todaysEntryQuery = PersonalLog::getTodaysEntryQuery();
-        $weeklyWaterCount = PersonalLog::getWeeklyWaterCount();
-
-        return view('home', [
+        return view('/past-entries', [
             'logs' => $filteredQuery->get(),
-            'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
             'filtered' => true,
-            'weekly_water_count' => $weeklyWaterCount,
             'filtered_date' => $request['filter_date'],
         ]);
     }

@@ -6,6 +6,11 @@
         @include('partials._new-entry', ['existing_entry' => $log, 'new_past_entry' => null, 'edit_entry' => true])
     </div>
 
-    <a href="/home" class="">Back to homepage</a>
+    <div>
+        <a href="/home" class="">Back to homepage</a>
+    </div>
+    <div>
+        <a href="/past-entries" class="">Back to past entries</a>
+    </div>
 </section>
 @endsection
