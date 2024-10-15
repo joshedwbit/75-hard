@@ -49,15 +49,73 @@ class PersonalLog extends Model
      */
     public static function getWeeklyWaterCount()
     {
-        $userId = auth('web')->id();
+        return self::getSummaries('water_count', Carbon::now()->startOfWeek());
+    }
 
-        $startOfWeek = Carbon::now()->startOfWeek();
+    /**
+     * Get the water count for the current month
+     *
+     * @return int
+     */
+    public static function getMonthlyWaterCount()
+    {
+        return self::getSummaries('water_count', Carbon::now()->startOfMonth());
+    }
 
-        $weeklyLogs = PersonalLog::where('user_id', $userId)
-                                // ->where('date', '>=', Carbon::now()->subDays(7))
-                                ->where('date', '>=', $startOfWeek)
-                                ->get();
+    /**
+     * Get the all time water count
+     *
+     * @return int
+     */
+    public static function getAllTimeWaterCount()
+    {
+        return self::getSummaries('water_count');
+    }
 
-        return $weeklyLogs->sum('water_count');
+    /**
+     * Get the workout count for the current week
+     *
+     * @return int
+     */
+    public static function getWeeklyWorkoutCount()
+    {
+        return self::getSummaries('workouts', Carbon::now()->startOfWeek());
+    }
+
+    /**
+     * Get the workout count for the current month
+     *
+     * @return int
+     */
+    public static function getMonthlyWorkoutCount()
+    {
+        return self::getSummaries('workouts', Carbon::now()->startOfMonth());
+    }
+
+    /**
+     * Get the all time workout count
+     *
+     * @return int
+     */
+    public static function getAllTimeWorkoutCount()
+    {
+        return self::getSummaries('workouts');
+    }
+
+    /**
+     * Get Summaries for a specified field and time period
+     *
+     * @param Carbon|null $timePeriod
+     * @return int
+     */
+    public static function getSummaries($field, $timePeriod = null)
+    {
+        $query = auth('web')->user()->userLogs();
+
+        if ($timePeriod) {
+            $query->where('date', '>=', $timePeriod);
+        }
+
+        return $query->sum($field);
     }
 }
