@@ -41,8 +41,8 @@ class HomeController extends BaseController
             'todays_entry' => $todaysEntryQuery->exists() ? $todaysEntryQuery->get() : null,
             'filtered' => false,
             'weekly_water_count' => $weeklyWaterCount,
-            'weekly_workout_count' => $weeklyWaterCount,
-            'weekly_pages_read_count' => $weeklyWaterCount,
+            'weekly_workout_count' => $weeklyWorkoutCount,
+            'weekly_pages_read_count' => $weeklyPagesReadCount,
             'is_monday' => $isMonday,
         ]);
     }

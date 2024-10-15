@@ -18,14 +18,14 @@ $numberOfThisWeeksLogs = count($this_weeks_logs);
     </div>
 
     @if ($todays_entry)
-        @if ($todays_entry[0]['water_count'] > 0)
-        <p>
-            You have drank {{ $todays_entry[0]['water_count'] }} bottles of water today, that's {{ $weekly_water_count }} this week!
-        </p>
-        @endif
         @if ($todays_entry[0]['workouts'] > 0)
         <p>
             You have worked out {{ $todays_entry[0]['workouts'] == 1 ? 'once' : 'twice' }} today, that's {{ $weekly_workout_count }} times this week!
+        </p>
+        @endif
+        @if ($todays_entry[0]['water_count'] > 0)
+        <p>
+            You have drank {{ $todays_entry[0]['water_count'] }} bottles of water today, that's {{ $weekly_water_count }} this week!
         </p>
         @endif
         @if ($todays_entry[0]['pages_read'] > 0)
