@@ -49,15 +49,182 @@ class PersonalLog extends Model
      */
     public static function getWeeklyWaterCount()
     {
-        $userId = auth('web')->id();
+        return self::getSummaries('water_count', Carbon::now()->startOfWeek());
+    }
 
-        $startOfWeek = Carbon::now()->startOfWeek();
+    /**
+     * Get the water count for the current month
+     *
+     * @return int
+     */
+    public static function getMonthlyWaterCount()
+    {
+        return self::getSummaries('water_count', Carbon::now()->startOfMonth());
+    }
 
-        $weeklyLogs = PersonalLog::where('user_id', $userId)
-                                // ->where('date', '>=', Carbon::now()->subDays(7))
-                                ->where('date', '>=', $startOfWeek)
-                                ->get();
+    /**
+     * Get the all time water count
+     *
+     * @return int
+     */
+    public static function getAllTimeWaterCount()
+    {
+        return self::getSummaries('water_count');
+    }
 
-        return $weeklyLogs->sum('water_count');
+    /**
+     * Get the workout count for the current week
+     *
+     * @return int
+     */
+    public static function getWeeklyWorkoutCount()
+    {
+        return self::getSummaries('workouts', Carbon::now()->startOfWeek());
+    }
+
+    /**
+     * Get the workout count for the current month
+     *
+     * @return int
+     */
+    public static function getMonthlyWorkoutCount()
+    {
+        return self::getSummaries('workouts', Carbon::now()->startOfMonth());
+    }
+
+    /**
+     * Get the all time workout count
+     *
+     * @return int
+     */
+    public static function getAllTimeWorkoutCount()
+    {
+        return self::getSummaries('workouts');
+    }
+
+    /**
+     * Get the pages read count for the current week
+     *
+     * @return int
+     */
+    public static function getWeeklyPagesReadCount()
+    {
+        return self::getSummaries('pages_read', Carbon::now()->startOfWeek());
+    }
+
+    /**
+     * Get the pages read count for the current month
+     *
+     * @return int
+     */
+    public static function getMonthlyPagesReadCount()
+    {
+        return self::getSummaries('pages_read', Carbon::now()->startOfMonth());
+    }
+
+    /**
+     * Get the all time pages read count
+     *
+     * @return int
+     */
+    public static function getAllTimePagesReadCount()
+    {
+        return self::getSummaries('pages_read');
+    }
+
+    /**
+     * Get total days logged
+     *
+     * @return int
+     */
+    public static function getTotalDaysLogged()
+    {
+        return count(auth('web')->user()->userLogs()->get());
+    }
+
+    /**
+     * Get a users longest streak
+     *
+     * @return int
+     */
+    public static function getLongestStreak()
+    {
+        $logs = auth('web')->user()->userLogs()->orderBy('date', 'asc')->pluck('date');
+
+        if ($logs->isEmpty()) {
+            return 0;
+        }
+
+        $longestStreak = 1;
+        $currentStreak = 1;
+
+        for ($i = 1; $i < $logs->count(); $i++) {
+            $currentDate = Carbon::parse($logs[$i]);
+            $previousDate = Carbon::parse($logs[$i - 1]);
+
+            if ($previousDate->diffInDays($currentDate) == 1) {
+                $currentStreak++;
+            } else {
+                $longestStreak = max($longestStreak, $currentStreak);
+                $currentStreak = 1; // Reset streak count
+            }
+        }
+
+        $longestStreak = max($longestStreak, $currentStreak);
+
+        return $longestStreak;
+    }
+
+
+    /**
+     * Get a users current streak
+     *
+     * @return int
+     */
+    public static function getCurrentStreak()
+    {
+        $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->pluck('date');
+
+        if ($logs->isEmpty()) {
+            return 0;
+        }
+
+        $todaysDate = Carbon::today();
+        $currentStreak = 1;
+
+        for ($i = 0; $i < ($logs->count() - 1); $i++) {
+            $latestDate = Carbon::parse($logs[$i]);
+            $previousDate = Carbon::parse($logs[$i + 1]);
+
+            if ($i==0 && $latestDate != $todaysDate) {
+                return 0;
+            }
+
+            if ($previousDate->diffInDays($latestDate) == 1) {
+                $currentStreak++;
+            } else {
+                break;
+            }
+        }
+
+        return $currentStreak;
+    }
+
+
+    /**
+     * Get Summaries for a specified field and time period
+     *
+     * @param Carbon|null $timePeriod
+     * @return int
+     */
+    public static function getSummaries($field, $timePeriod = null)
+    {
+        $query = auth('web')->user()->userLogs();
+
+        if ($timePeriod) {
+            $query->where('date', '>=', $timePeriod);
+        }
+
+        return $query->sum($field);
     }
 }
