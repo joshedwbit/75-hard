@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+$numberOfThisWeeksLogs = count($this_weeks_logs);
+@endphp
+
 <section>
     <h1>75Hard tracker</h1>
 
@@ -19,8 +23,10 @@
 
     <h3>Your week so far:</h3>
 
-    @if (count($this_weeks_logs) <= 1)
+    @if ($numberOfThisWeeksLogs == 0)
         {{ $is_monday ? 'It\'s the start of a new week!'  : 'No past entries found for this week.' }}
+    @elseif ($numberOfThisWeeksLogs == 1)
+        {{ $todays_entry ? 'No past entries found for this week.' : '' }}
     @endif
 
     @foreach($this_weeks_logs as $log)
