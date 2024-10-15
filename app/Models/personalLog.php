@@ -143,6 +143,75 @@ class PersonalLog extends Model
     }
 
     /**
+     * Get a users longest streak
+     *
+     * @return int
+     */
+    public static function getLongestStreak()
+    {
+        $logs = auth('web')->user()->userLogs()->orderBy('date', 'asc')->pluck('date');
+
+        if ($logs->isEmpty()) {
+            return 0;
+        }
+
+        $longestStreak = 1;
+        $currentStreak = 1;
+
+        for ($i = 1; $i < $logs->count(); $i++) {
+            $currentDate = Carbon::parse($logs[$i]);
+            $previousDate = Carbon::parse($logs[$i - 1]);
+
+            if ($previousDate->diffInDays($currentDate) == 1) {
+                $currentStreak++;
+            } else {
+                $longestStreak = max($longestStreak, $currentStreak);
+                $currentStreak = 1; // Reset streak count
+            }
+        }
+
+        $longestStreak = max($longestStreak, $currentStreak);
+
+        return $longestStreak;
+    }
+
+
+    /**
+     * Get a users current streak
+     *
+     * @return int
+     */
+    public static function getCurrentStreak()
+    {
+        $logs = auth('web')->user()->userLogs()->orderBy('date', 'desc')->pluck('date');
+
+        if ($logs->isEmpty()) {
+            return 0;
+        }
+
+        $todaysDate = Carbon::today();
+        $currentStreak = 1;
+
+        for ($i = 0; $i < ($logs->count() - 1); $i++) {
+            $latestDate = Carbon::parse($logs[$i]);
+            $previousDate = Carbon::parse($logs[$i + 1]);
+
+            if ($i==0 && $latestDate != $todaysDate) {
+                return 0;
+            }
+
+            if ($previousDate->diffInDays($latestDate) == 1) {
+                $currentStreak++;
+            } else {
+                break;
+            }
+        }
+
+        return $currentStreak;
+    }
+
+
+    /**
      * Get Summaries for a specified field and time period
      *
      * @param Carbon|null $timePeriod
