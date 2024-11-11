@@ -14,7 +14,7 @@
         <div class="field field--email">
             <label for="email">Email</label>
 
-            <input type="text" id="email" name="email">
+            <input type="email" id="email" name="email">
 
             @error('email')
             <p class="error">{{$message}}</p>
