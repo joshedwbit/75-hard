@@ -1,5 +1,7 @@
 import './bootstrap';
 import { handleCheckboxLogic } from './checkbox-handler'
+import { createApp } from 'vue';
+import IncrementCounter from './components/IncrementCounter.vue';
 
 let waterCountCheckboxes = document.querySelectorAll('.js-todays-entry input[name="water_count[]"]');
 let workoutCheckboxes = document.querySelectorAll('.js-todays-entry input[name="workouts[]"]');
@@ -19,3 +21,7 @@ handleCheckboxLogic(editWorkoutCheckboxes);
 
 handleCheckboxLogic(pastWaterCountCheckboxes);
 handleCheckboxLogic(pastWorkoutCheckboxes);
+
+createApp({})
+    .component('IncrementCounter', IncrementCounter)
+    .mount('#app')
